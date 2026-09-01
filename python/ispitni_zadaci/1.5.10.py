@@ -1,0 +1,17 @@
+from constraint import Problem
+
+def main():
+    problem = Problem()
+    tablete = ['B', 'C', 'D', 'MG', 'S', 'ZN']
+    kolicine = [9, 19, 6, 4, 2, 8]
+    for t,k in zip(tablete, kolicine):
+        problem.addVariable(t, range(k+1))
+    problem.addConstraint(lambda *x: sum(x) <= 7, tablete)
+    problem.addConstraint(lambda b,c,d,mg,s,zn: 130 * b + 800 * c + 150 * d + 370 * mg + 490 * s + 150 * zn <= 11800, tablete)
+    problem.addConstraint(lambda b,c,d,mg,s,zn: 15 * b + 11 * c + 10 * d + 22 * mg + 1 * s + 13 * zn <= 100, tablete)
+    problem.addConstraint(lambda b,c,d,mg,s,zn: 33 * b + 31 * c + 20 * d + 18 * mg + 21 * s + 16 * zn <= 200, tablete)
+    r = max(problem.getSolutions(), key = lambda x: 92.5 * x['B'] + 155.5 * x['C'] + 79.6 * x['D'] + 156.2 * x['MG'] + 413 * x['S'] + 137.7 * x['ZN'])
+    print(f"{92.5 * r['B'] + 155.5 * r['C'] + 79.6 * r['D'] + 156.2 * r['MG'] + 413 * r['S'] + 137.7 * r['ZN']:.2f}")
+    
+if __name__ == '__main__':
+    main()
